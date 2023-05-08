@@ -1,0 +1,6 @@
+service : {
+  add: (int) -> (int);
+  div: (int) -> (int);
+  reset: () -> ();
+  show: () -> (int) query;
+}
