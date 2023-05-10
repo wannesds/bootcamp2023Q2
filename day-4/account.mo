@@ -3,6 +3,8 @@ import Array "mo:base/Array";
 import Option "mo:base/Option";
 import Nat8 "mo:base/Nat8";
 import Principal "mo:base/Principal";
+import Nat32 "mo:base/Nat32";
+import Text "mo:base/Text";
 
 module {
         
@@ -24,7 +26,7 @@ module {
 
     public func accountsHash(lhs : Account) : Nat32 {
         let lhsSubaccount : Subaccount = Option.get<Subaccount>(lhs.subaccount, _getDefaultSubaccount());
-        Principal.hash(lhs.owner) + Blob.hash(lhsSubaccount);  
+        Text.hash(Principal.toText(lhs.owner) # Nat32.toText(Blob.hash(lhsSubaccount)));
     };
 
     public func accountBelongToPrincipal(account : Account, principal : Principal) : Bool {

@@ -13,16 +13,16 @@ actor MotoCoin {
     let tokenName : Text= "MotoCoin";
     let tokenSymbol : Text = "MOC";
 
-    stable var stableLedger : [(Account, Nat)] = [];
+    // stable var stableLedger : [(Account, Nat)] = [];
     let ledger = TrieMap.TrieMap<Account, Nat>(Account.accountsEqual, Account.accountsHash);
 
-    system func preupgrade() {
-		stableLedger := Iter.toArray(ledger.entries());
-	};
+    // system func preupgrade() {
+	// 	stableLedger := Iter.toArray(ledger.entries());
+	// };
 
-	system func postupgrade() {
-		stableLedger := [];
-	};
+	// system func postupgrade() {
+	// 	stableLedger := [];
+	// };
 
 
     let bootcamp = actor("rww3b-zqaaa-aaaam-abioa-cai") : actor {
@@ -62,7 +62,7 @@ actor MotoCoin {
 
     // Transfer tokens to another account
     public shared ({caller}) func transfer(from: Account, to : Account, amount : Nat) : async Result.Result<(), Text> {
-        let true = (caller == from.owner) else return #err "You are not the owner of this account";
+        let true = Principal.equal(from.owner, caller) else return #err "You are not the owner of this account";
         let ?fromBalance = ledger.get(from) else return #err "You don't have an account";
         let ?toBalance = ledger.get(to) else return #err "Target doesn't has an account";
         let true = (fromBalance >= amount) else return #err "You don't have enough balance";
@@ -74,7 +74,7 @@ actor MotoCoin {
     // Airdrop 1000 MotoCoin to any student that is part of the Bootcamp.
     public shared func airdrop() : async Result.Result<(),Text> {
         let students : [Principal] = await bootcamp.getAllStudentsPrincipal() else return #err "An error occured when calling bootcamp canister";
-        
+    
         for (principal in students.vals()) {
             let newAccount = {
                 owner = principal;
