@@ -2,7 +2,8 @@ import Int "mo:base/Int";
 import Float "mo:base/Float";
 
 actor Calculator {
-    // NOTE : Not sure if we were supposed to use the Float lib for all functions
+    // NOTE : Not sure if we were supposed to use the Float lib for all functions, prob not
+    //live: https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.ic0.app/?id=hmad5-jaaaa-aaaap-aa65a-cai
 
     // Step 1 -  Define a mutable variable called `counter`.
     var counter : Float = 0;
