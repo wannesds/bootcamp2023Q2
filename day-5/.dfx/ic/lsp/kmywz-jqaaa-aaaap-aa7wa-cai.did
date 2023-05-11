@@ -1,0 +1,36 @@
+type TestResult = 
+ variant {
+   err: TestError;
+   ok;
+ };
+type TestError = 
+ variant {
+   UnexpectedError: text;
+   UnexpectedValue: text;
+ };
+type StudentProfile = 
+ record {
+   Team: text;
+   graduate: bool;
+   name: text;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok: StudentProfile;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok;
+ };
+service : {
+  addMyProfile: (StudentProfile) -> (Result);
+  deleteMyProfile: () -> (Result);
+  givePrincipal: () -> (principal);
+  seeAProfile: (principal) -> (Result_1) query;
+  test: (principal) -> (TestResult);
+  updateMyProfile: (StudentProfile) -> (Result);
+  verifyOwnership: (principal, principal) -> (bool);
+  verifyWork: (principal, principal) -> (Result);
+}

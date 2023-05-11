@@ -58,6 +58,7 @@ actor HomeworkDiary {
         Buffer.toArray<Homework>(homeworkDiary)
     };
 
+
     // Get the list of pending (not completed) homework tasks
     public query func getPendingHomework() : async [Homework] {
         let pendingEntries = Buffer.mapFilter<Homework, Homework>(homeworkDiary, func (entry) {

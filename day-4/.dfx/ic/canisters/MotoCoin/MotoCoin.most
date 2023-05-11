@@ -1,4 +1,7 @@
 // Version: 1.0.0
+type Account = {owner : Principal; subaccount : ?Subaccount};
+type Account__1 = Account;
+type Subaccount = Blob;
 actor {
-  
+  stable var stableLedger : [(Account__1, Nat)]
 };

@@ -28,7 +28,6 @@ actor Studentwall {
     func hashId(id : Nat) : Hash.Hash {
 		Text.hash(Nat.toText(id));
 	};
-    
     let map = HashMap.HashMap<Nat, Message>(8, Nat.equal, hashId); 
 
     func sortByVote(x : Message, y : Message) : Order.Order {
@@ -49,7 +48,9 @@ actor Studentwall {
             creator = caller;
         };
         map.put(messageId, newMessage);
-        messageId
+        //after verifying found possible mistake didnt addup msgID, not sure tbh 
+        messageId += 1;
+        messageId - 1
     };
 
     //Get a specific message by ID
@@ -135,6 +136,4 @@ actor Studentwall {
         let arr = Buffer.toArray(buf);
         Array.sort(arr, sortByVote);
     };
-
-    
 };

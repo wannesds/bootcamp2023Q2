@@ -1,0 +1,5 @@
+// Version: 1.0.0
+type StudentProfile = {graduate : Bool; name : Text; team : Text};
+actor {
+  stable var stableStudentProfile : [(Principal, StudentProfile)]
+};

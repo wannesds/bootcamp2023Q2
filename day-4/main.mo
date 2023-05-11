@@ -13,16 +13,16 @@ actor MotoCoin {
     let tokenName : Text= "MotoCoin";
     let tokenSymbol : Text = "MOC";
 
-    // stable var stableLedger : [(Account, Nat)] = [];
+    stable var stableLedger : [(Account, Nat)] = [];
     let ledger = TrieMap.TrieMap<Account, Nat>(Account.accountsEqual, Account.accountsHash);
 
-    // system func preupgrade() {
-	// 	stableLedger := Iter.toArray(ledger.entries());
-	// };
+    system func preupgrade() {
+		stableLedger := Iter.toArray(ledger.entries());
+	};
 
-	// system func postupgrade() {
-	// 	stableLedger := [];
-	// };
+	system func postupgrade() {
+		stableLedger := [];
+	};
 
 
     let bootcamp = actor("rww3b-zqaaa-aaaam-abioa-cai") : actor {
@@ -73,16 +73,20 @@ actor MotoCoin {
 
     // Airdrop 1000 MotoCoin to any student that is part of the Bootcamp.
     public shared func airdrop() : async Result.Result<(),Text> {
-        let students : [Principal] = await bootcamp.getAllStudentsPrincipal() else return #err "An error occured when calling bootcamp canister";
-    
-        for (principal in students.vals()) {
-            let newAccount = {
-                owner = principal;
-                subaccount = null;
+        try {
+            let students : [Principal] = await bootcamp.getAllStudentsPrincipal();
+                
+            for (principal in students.vals()) {
+                let newAccount = {
+                    owner = principal;
+                    subaccount = null;
+                };
+                ledger.put(newAccount, 100);
             };
-            ledger.put(newAccount, 100);
+        } catch (e) {
+            return #err "An error occured when calling bootcamp canister";
         };
-        
+         
         #ok 
     };
 }
