@@ -7,7 +7,6 @@ import Account "account";
 
 actor MotoCoin {
 
-    public type Subaccount = Account.Subaccount;
     public type Account = Account.Account;
 
     let tokenName : Text= "MotoCoin";

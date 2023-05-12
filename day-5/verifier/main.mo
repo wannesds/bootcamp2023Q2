@@ -40,7 +40,8 @@ actor Verifier {
         Buffer.toArray<Principal>(controllers);
     };
 
-      private func doTest(canisterId : Principal) : async TestResult {
+    //could remove private funcs async prob
+    private func doTest(canisterId : Principal) : async TestResult {
         let calculator = actor(Principal.toText(canisterId)) : actor {
             add : shared (n : Int) -> async Int;
             sub : shared (n : Nat) -> async Int;
@@ -91,6 +92,8 @@ actor Verifier {
         };
         return true;
     };
+
+    
 
     //STABLE STORES
     stable var stableStudentProfile : [(Principal, StudentProfile)] = [];
