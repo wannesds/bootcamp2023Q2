@@ -9,6 +9,7 @@ import Order "mo:base/Order";
 import Array "mo:base/Array";
 
 actor Studentwall {
+    
     public type Content = {
         #Text: Text;
         #Image: Blob;
@@ -63,6 +64,7 @@ actor Studentwall {
     // Update the content for a specific message by ID
     public shared ({caller}) func updateMessage(messageId : Nat, c : Content) : async Result.Result<(), Text> {
         let ?msg = map.get(messageId) else return #err "Couldn't find msg";
+        
         if (caller != msg.creator) return #err "You are not the creator";
 
         let newMessage = {
@@ -133,7 +135,7 @@ actor Studentwall {
             buf.add(value); // Append the entry to the buffer
         };
 
-        let arr = Buffer.toArray(buf);
-        Array.sort(arr, sortByVote);
+        // let arr = Buffer.toArray(buf);
+        // Array.sort(arrr, sortByVote);
     };
 };
